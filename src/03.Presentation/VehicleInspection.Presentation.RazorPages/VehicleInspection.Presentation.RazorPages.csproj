@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\01.Domain\Service\VehicleInspection.Domain.Service.AppServices\VehicleInspection.Domain.Service.AppServices.csproj" />
+    <ProjectReference Include="..\..\01.Domain\Service\VehicleInspection.Domain.Service.Services\VehicleInspection.Domain.Service.Services.csproj" />
+    <ProjectReference Include="..\..\02.Infrastructure\VehicleInspection.Infrastructure.EFCore\VehicleInspection.Infrastructure.EFCore.csproj" />
+  </ItemGroup>
+
+</Project>

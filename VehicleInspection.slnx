@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/00.Framework/">
+    <Project Path="src/00.Framework/VehicleInspection.Framework/VehicleInspection.Framework.csproj" />
+  </Folder>
+  <Folder Name="/src/01.Domain/" />
+  <Folder Name="/src/01.Domain/Core/">
+    <Project Path="src/01.Domain/Core/VehicleInspection.Domain.Core/VehicleInspection.Domain.Core.csproj" />
+  </Folder>
+  <Folder Name="/src/01.Domain/Service/">
+    <Project Path="src/01.Domain/Service/VehicleInspection.Domain.Service.AppServices/VehicleInspection.Domain.Service.AppServices.csproj" />
+    <Project Path="src/01.Domain/Service/VehicleInspection.Domain.Service.Services/VehicleInspection.Domain.Service.Services.csproj" />
+  </Folder>
+  <Folder Name="/src/02.Infrastructure/">
+    <Project Path="src/02.Infrastructure/VehicleInspection.Infrastructure.EFCore/VehicleInspection.Infrastructure.EFCore.csproj" />
+  </Folder>
+  <Folder Name="/src/03.Presentation/">
+    <Project Path="src/03.Presentation/VehicleInspection.Presentation.RazorPages/VehicleInspection.Presentation.RazorPages.csproj" />
+  </Folder>
+</Solution>
