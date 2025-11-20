@@ -26,7 +26,13 @@ namespace VehicleInspection.Domain.Service.AppServices.InspectionRequestAgg
 
             if (input.CarPlateNumber is not null)
             {
+                if (inspectionService.IsPlateNumberInspected(input.CarPlateNumber))
+                {
+                    return Result<bool>.Failure("آخرین بازدید ماشین کمتر از یکسال است.");
+                }
+
                 var addResult = inspectionService.AddInspectionRequest(input);
+
                 if (addResult)
                 {
                     return Result<bool>.Success("درخواست با موفقیت ثبت شد.");

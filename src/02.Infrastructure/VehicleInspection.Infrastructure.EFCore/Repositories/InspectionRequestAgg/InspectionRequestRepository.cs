@@ -20,6 +20,19 @@ namespace VehicleInspection.Infrastructure.EFCore.Repositories.InspectionRequest
             return dbContext.InspectionRequests.Any(i => i.CarPlateNumber == plateNumber);
         }
 
+        public DateOnly? LastInspectDate(string plateNumber)
+        {
+            var inspect = dbContext.InspectionRequests
+                .FirstOrDefault(i => i.CarPlateNumber == plateNumber && i.Status == InspectionStatus.Approved);
+
+            if (inspect is not null)
+            {
+                return inspect.VisitAt;
+            }
+
+            return null;
+        }
+
         public List<InspectionRequestShowDto> GetList(DateOnly? date, int? manufacturerId)
         {
             var query = dbContext.InspectionRequests

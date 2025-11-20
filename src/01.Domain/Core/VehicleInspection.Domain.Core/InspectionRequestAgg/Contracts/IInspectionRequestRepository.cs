@@ -9,6 +9,8 @@ namespace VehicleInspection.Domain.Core.InspectionRequestAgg.Contracts
 
         public bool IsPlateNumExist(string plateNumber);
 
+        public DateOnly? LastInspectDate(string plateNumber);
+
         public List<InspectionRequestShowDto> GetList(DateOnly? date, int? manufacturerId);
 
         public int GetLastQueueNumber(DateOnly date);

@@ -8,6 +8,8 @@ namespace VehicleInspection.Domain.Core.InspectionRequestAgg.Contracts
     {
         public bool IsCarAllowedInDate(int carManufacturerId, DateOnly date);
 
+        public bool IsPlateNumberInspected(string plateNumber);
+
         public bool IsCarFiveYearsOLd(int carManufacturerYear);
 
         public bool IsQueueFull(DateOnly date);

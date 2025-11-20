@@ -20,6 +20,18 @@ namespace VehicleInspection.Domain.Service.Services.InspectionRequestAgg
             return false;
         }
 
+        public bool IsPlateNumberInspected(string plateNumber)
+        {
+            var lastInspectedDate = inspectionRequestRepository.LastInspectDate(plateNumber);
+
+            if (lastInspectedDate == null)
+                return false;
+
+            var last = lastInspectedDate.Value.ToDateTime(TimeOnly.MinValue);
+
+            return (DateTime.Today - last).TotalDays < 365;
+        }
+
         public bool IsCarFiveYearsOLd(int carManufacturerYear)
         {
             var pc = new PersianCalendar();
