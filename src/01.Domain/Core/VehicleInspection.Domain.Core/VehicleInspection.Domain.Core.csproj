@@ -6,11 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="CarAgg\Contracts\" />
-    <Folder Include="CarAgg\Dtos\" />
-    <Folder Include="OperatorAgg\Contracts\" />
-    <Folder Include="OperatorAgg\Dtos\" />
-  </ItemGroup>
-
 </Project>

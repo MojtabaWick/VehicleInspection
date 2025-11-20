@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\VehicleInspection.Domain.Core\VehicleInspection.Domain.Core.csproj" />
+    <ProjectReference Include="..\VehicleInspection.Domain.Service.Services\VehicleInspection.Domain.Service.Services.csproj" />
+  </ItemGroup>
+
 </Project>

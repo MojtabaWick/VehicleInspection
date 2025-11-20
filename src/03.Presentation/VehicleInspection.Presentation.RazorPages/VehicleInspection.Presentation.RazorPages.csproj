@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\00.Framework\VehicleInspection.Framework\VehicleInspection.Framework.csproj" />
     <ProjectReference Include="..\..\01.Domain\Service\VehicleInspection.Domain.Service.AppServices\VehicleInspection.Domain.Service.AppServices.csproj" />
     <ProjectReference Include="..\..\01.Domain\Service\VehicleInspection.Domain.Service.Services\VehicleInspection.Domain.Service.Services.csproj" />
     <ProjectReference Include="..\..\02.Infrastructure\VehicleInspection.Infrastructure.EFCore\VehicleInspection.Infrastructure.EFCore.csproj" />

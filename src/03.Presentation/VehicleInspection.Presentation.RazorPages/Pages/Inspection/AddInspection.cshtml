@@ -1,0 +1,188 @@
+﻿@page
+@model AddInspectionModel
+@{
+    Layout = "_Layout";
+}
+
+<h3 class="mb-4">ثبت درخواست معاینه فنی</h3>
+
+<form method="post">
+
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+    <!-- کارخانه -->
+    <div class="mb-3">
+        <label class="form-label">نام کارخانه</label>
+        <select asp-for="Input.CarManufactureId" 
+                class="form-select" 
+                asp-items="@(new SelectList(Model.Factories, "Id", "Name"))"
+                onchange="loadCars()">
+            <option value="">انتخاب کنید...</option>
+        </select>
+        <span asp-validation-for="Input.CarManufactureId" class="text-danger"></span>
+    </div>
+
+
+
+    <!-- لیست ماشین‌ها -->
+    <div class="mb-3">
+        <label asp-for="Input.CarId" class="form-label">نام ماشین</label>
+        <select asp-for="Input.CarId" class="form-select">
+            <option value="">انتخاب کنید...</option>
+
+            @foreach (var c in Model.Cars)
+            {
+                <option value="@c.Id">@c.Name</option>
+            }
+        </select>
+        <span asp-validation-for="Input.CarId" class="text-danger"></span>
+    </div>
+
+
+    <!-- نام مالک -->
+    <div class="mb-3">
+        <label asp-for="Input.CarOwnerName" class="form-label"></label>
+        <input asp-for="Input.CarOwnerName" class="form-control" />
+        <span asp-validation-for="Input.CarOwnerName" class="text-danger"></span>
+    </div>
+
+    <!-- تلفن -->
+    <div class="mb-3">
+        <label asp-for="Input.CarOwnerPhoneNumber" class="form-label"></label>
+        <input asp-for="Input.CarOwnerPhoneNumber" class="form-control" />
+        <span asp-validation-for="Input.CarOwnerPhoneNumber" class="text-danger"></span>
+    </div>
+
+    <!-- کد ملی -->
+    <div class="mb-3">
+        <label asp-for="Input.CarOwnerIdCardNumber" class="form-label"></label>
+        <input asp-for="Input.CarOwnerIdCardNumber" class="form-control" />
+        <span asp-validation-for="Input.CarOwnerIdCardNumber" class="text-danger"></span>
+    </div>
+
+    <!-- پلاک -->
+    <div class="mb-3">
+        <label class="form-label">پلاک</label>
+        <div class="d-flex gap-2">
+            <input asp-for="Plate.TwoDigitsFirst" class="form-control" maxlength="2" placeholder="11" />
+            <input asp-for="Plate.Letter" class="form-control" maxlength="1" placeholder="الف" />
+            <input asp-for="Plate.ThreeDigits" class="form-control" maxlength="3" placeholder="123" />
+            <input asp-for="Plate.IranCode" class="form-control" maxlength="2" placeholder="22" />
+        </div>
+        <span asp-validation-for="Plate.TwoDigitsFirst" class="text-danger"></span>
+        <span asp-validation-for="Plate.Letter" class="text-danger"></span>
+        <span asp-validation-for="Plate.ThreeDigits" class="text-danger"></span>
+        <span asp-validation-for="Plate.IranCode" class="text-danger"></span>
+    </div>
+
+    <!-- سال ساخت -->
+    <div class="mb-3">
+        <label asp-for="Input.ManufactureYear" class="form-label"></label>
+        <input asp-for="Input.ManufactureYear" class="form-control" />
+        <span asp-validation-for="Input.ManufactureYear" class="text-danger"></span>
+    </div>
+
+    <!-- هیبرید -->
+    <div class="form-check mb-3">
+        <input asp-for="Input.IsHybridFuel" class="form-check-input" />
+        <label asp-for="Input.IsHybridFuel" class="form-check-label"></label>
+    </div>
+
+    <!-- دنده اتومات -->
+    <div class="form-check mb-3">
+        <input asp-for="Input.IsAutomatic" class="form-check-input" />
+        <label asp-for="Input.IsAutomatic" class="form-check-label"></label>
+    </div>
+
+    <!-- آدرس -->
+    <div class="mb-3">
+        <label asp-for="Input.Address" class="form-label"></label>
+        <textarea asp-for="Input.Address" class="form-control"></textarea>
+        <span asp-validation-for="Input.Address" class="text-danger"></span>
+    </div>
+
+    <!-- تاریخ شمسی -->
+    <div class="mb-3">
+        <label class="form-label">تاریخ مراجعه (شمسی)</label>
+        <input type="text" id="shamsiDate" class="form-control" name="ShamsiVisitAt" placeholder="1403/11/25" />
+        <script>
+            $("#shamsiDate").persianDatepicker({
+                format: "YYYY/MM/DD"
+            });
+        </script>
+    </div>
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $("#shamsiDate").persianDatepicker({
+                    observer: true,
+                    format: 'YYYY/MM/DD',
+                    autoClose: true,
+                    initialValue: true,
+                    altField: '#shamsiDate', // مهم برای ذخیره درست
+                    calendar: {
+                        persian: {
+                            locale: 'fa',
+                            showHint: true,
+                            leapYearMode: "astronomical" // دقیق‌ترین محاسبه کبیسه
+                        }
+                    },
+                    navigator: {
+                        enabled: true,
+                        text: {
+                            btnNextText: "بعدی",
+                            btnPrevText: "قبلی"
+                        }
+                    },
+                    toolbox: {
+                        enabled: true,
+                        calendarSwitch: true
+                    },
+                    timePicker: { enabled: false },
+
+                    // ====== این دو خط مشکل اعداد فارسی و روز هفته رو حل می‌کنه ======
+                    persianDigit: false,           // <—— اعداد انگلیسی می‌شه (حتماً false باشه!)
+                    viewFormat: 'YYYY/MM/DD',      // فرمت نمایش
+                    format: 'YYYY/MM/DD',          // فرمت ذخیره شده
+                    altFormat: 'YYYY/MM/DD'        // فرمت داخلی
+                })
+                // این خط اضافه خیلی مهمه! وقتی کاربر تاریخ انتخاب کرد، اعداد رو به انگلیسی تبدیل کن
+                .on('change', function () {
+                    const val = $(this).val();
+                    if (val) {
+                        // تبدیل اعداد فارسی به انگلیسی (در صورت نیاز)
+                        const englishNumbers = val
+                            .replace(/۰/g, '0').replace(/۱/g, '1').replace(/۲/g, '2')
+                            .replace(/۳/g, '3').replace(/۴/g, '4').replace(/۵/g, '5')
+                            .replace(/۶/g, '6').replace(/۷/g, '7').replace(/۸/g, '8').replace(/۹/g, '9');
+                        $(this).val(englishNumbers);
+                    }
+                });
+            });
+        </script>
+    }
+    <script>
+        function loadCars() {
+            const factoryId = document.querySelector('[name="Input.CarManufactureId"]').value;
+
+            // اگر چیزی انتخاب نشده بود، فقط صفحه رو رفرش می‌کنیم بدون پارامتر
+            if (!factoryId) {
+                window.location.href = '/Inspection/AddInspection';
+                return;
+            }
+
+            // با GET می‌ریم به همون صفحه ولی با Handler مخصوص
+            window.location.href = `/Inspection/AddInspection?handler=LoadCars&factoryId=${factoryId}`;
+        }
+
+        // وقتی صفحه لود شد، اگر کارخانه از قبل انتخاب شده بود، ماشین‌ها رو هم نشون بده
+        window.onload = function () {
+            const factoryId = "@Model.Input.CarManufactureId";
+            if (factoryId && factoryId > 0) {
+                // ماشین‌ها از قبل لود شدن، چیزی نکن
+            }
+        }
+    </script>
+    <button type="submit" class="btn btn-primary">ثبت درخواست</button>
+
+</form>

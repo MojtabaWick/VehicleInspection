@@ -26,7 +26,7 @@ namespace VehicleInspection.Infrastructure.EFCore.Configurations
 
             builder.Property(ir => ir.CarPlateNumber)
                    .IsRequired()
-                   .HasMaxLength(10);
+                   .HasMaxLength(30);
 
             builder.Property(ir => ir.ManufactureYear)
                    .IsRequired()

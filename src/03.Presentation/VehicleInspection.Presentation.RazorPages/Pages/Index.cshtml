@@ -1,10 +1,15 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card text-center shadow-lg p-5" style="max-width: 500px; width: 100%;">
+        <div class="card-body">
+            <h1 class="card-title mb-4">به وبسایت معاینه فنی خوش آمدید</h1>
+            <p class="card-text mb-4">اینجا می‌توانید به راحتی نوبت معاینه فنی خود را ثبت و مدیریت کنید.</p>
+            <a asp-page="/Inspection/AddInspection" class="btn btn-primary">ایجاد و دریافت نوبت</a>
+        </div>
+    </div>
 </div>

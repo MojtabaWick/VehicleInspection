@@ -1,0 +1,21 @@
+﻿@page
+@model VehicleInspection.Presentation.RazorPages.Pages.Inspection.FailedModel
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+                <h4 class="alert-heading">خطا در انجام عملیات ❌</h4>
+                <p class="mb-0">@Model.Message</p>
+
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div class="mt-4 text-center">
+                <a asp-page="/Index" class="btn btn-secondary px-4">بازگشت به صفحه اصلی</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
