@@ -22,14 +22,20 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Operator
         public List<InspectionRequestShowDto> Requests { get; set; }
         public List<ManufacturerDto> Manufacturers { get; set; }
 
-        public IActionResult OnGet(DateOnly? selectedDate, int? manufacturerId)
+        [BindProperty(SupportsGet = true, Name = "selectedDate")]
+        public DateOnly? SelectedDate { get; set; }
+
+        [BindProperty(SupportsGet = true, Name = "manufacturerId")]
+        public int? ManufacturerId { get; set; }
+
+        public IActionResult OnGet()
         {
             if (InMemoryDB.OnlineUser == null)
                 return RedirectToPage("/Operator/LogIn");
 
             Manufacturers = _manufacturerService.GetManufacturer();
 
-            Requests = _inspectionService.GetInspectionRequests(selectedDate, manufacturerId);
+            Requests = _inspectionService.GetInspectionRequests(SelectedDate, ManufacturerId);
 
             return Page();
         }
@@ -37,19 +43,19 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Operator
         public IActionResult OnGetSetApproved(int taskId)
         {
             _inspectionService.SetApproved(taskId);
-            return RedirectToPage();
+            return RedirectToPage(new { selectedDate = SelectedDate, manufacturerId = ManufacturerId });
         }
 
         public IActionResult OnGetSetPending(int taskId)
         {
             _inspectionService.SetPending(taskId);
-            return RedirectToPage();
+            return RedirectToPage(new { selectedDate = SelectedDate, manufacturerId = ManufacturerId });
         }
 
         public IActionResult OnGetSetRejected(int taskId)
         {
             _inspectionService.SetRejected(taskId);
-            return RedirectToPage();
+            return RedirectToPage(new { selectedDate = SelectedDate, manufacturerId = ManufacturerId });
         }
     }
 }

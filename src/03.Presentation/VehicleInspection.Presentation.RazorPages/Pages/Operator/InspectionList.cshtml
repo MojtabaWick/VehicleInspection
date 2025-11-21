@@ -121,19 +121,31 @@
                                     <div class="d-flex justify-content-center gap-2">
                                         @if (item.Status == InspectionStatus.Approved)
                                         {
-                                            <a asp-page-handler="SetPending" asp-route-taskId="@item.Id" class="btn btn-sm btn-outline-primary">
+                                            <a asp-page-handler="SetPending" 
+                                               asp-route-taskId="@item.Id"
+                                               asp-route-selectedDate="@Model.SelectedDate"
+                                               asp-route-manufacturerId="@Model.ManufacturerId"
+                                               class="btn btn-sm btn-outline-primary">
                                                 در انتظار
                                             </a>
 
                                         }
                                         else
                                         {
-                                            <a asp-page-handler="SetApproved" asp-route-taskId="@item.Id" class="btn btn-sm btn-outline-success">
-                                                تاییید کردن
+                                            <a asp-page-handler="SetApproved" 
+                                               asp-route-taskId="@item.Id"
+                                               asp-route-selectedDate="@Model.SelectedDate"
+                                               asp-route-manufacturerId="@Model.ManufacturerId"
+                                               class="btn btn-sm btn-outline-success">
+                                                تأیید کردن
                                             </a>
 
                                         }
-                                        <a asp-page-handler="SetRejected" asp-route-taskId="@item.Id" class="btn btn-sm btn-outline-danger">
+                                        <a asp-page-handler="SetRejected" 
+                                           asp-route-taskId="@item.Id"
+                                           asp-route-selectedDate="@Model.SelectedDate"
+                                           asp-route-manufacturerId="@Model.ManufacturerId"
+                                           class="btn btn-sm btn-outline-danger">
                                             رد کردن
                                         </a>
 
