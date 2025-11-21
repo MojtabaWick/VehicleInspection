@@ -4,6 +4,7 @@ using VehicleInspection.Domain.Core.InspectionRequestAgg.Contracts;
 using VehicleInspection.Domain.Core.InspectionRequestAgg.Dtos;
 using VehicleInspection.Domain.Core.ManufacturerAgg.Contracts;
 using VehicleInspection.Domain.Core.ManufacturerAgg.Dtos;
+using VehicleInspection.Framework;
 using VehicleInspection.Presentation.RazorPages.InMemoryDataBase;
 
 namespace VehicleInspection.Presentation.RazorPages.Pages.Operator
@@ -35,7 +36,16 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Operator
 
             Manufacturers = _manufacturerService.GetManufacturer();
 
-            Requests = _inspectionService.GetInspectionRequests(SelectedDate, ManufacturerId);
+            // ????? ????? ???? ?? ?????? ??? ????? ?????? ????
+            DateOnly? gregorianDate = null;
+
+            if (!string.IsNullOrWhiteSpace(Request.Query["selectedDate"]))
+            {
+                string shamsi = Request.Query["selectedDate"].ToString();
+                gregorianDate = shamsi.ToGregorianDateOnly();  // ????? ?? ??????
+            }
+
+            Requests = _inspectionService.GetInspectionRequests(gregorianDate, ManufacturerId);
 
             return Page();
         }
