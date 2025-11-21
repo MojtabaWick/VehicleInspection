@@ -386,6 +386,10 @@ namespace VehicleInspection.Infrastructure.EFCore.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.PrimitiveCollection<string>("Images")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsAutomatic")
                         .HasColumnType("bit");
 
@@ -454,6 +458,10 @@ namespace VehicleInspection.Infrastructure.EFCore.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.PrimitiveCollection<string>("Images")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAutomatic")
                         .HasColumnType("bit");

@@ -7,6 +7,7 @@ using VehicleInspection.Domain.Core.InspectionRequestAgg.Dtos;
 using VehicleInspection.Domain.Core.ManufacturerAgg.Contracts;
 using VehicleInspection.Domain.Core.ManufacturerAgg.Dtos;
 using VehicleInspection.Framework;
+using VehicleInspection.Framework.FileService;
 using VehicleInspection.Presentation.RazorPages.Models;
 
 namespace VehicleInspection.Presentation.RazorPages.Pages.Inspection
@@ -16,15 +17,18 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Inspection
         private readonly ICarAppService _carService;
         private readonly IManufacturerAppService _manufacturerService;
         private readonly IInspectionRequestAppService _service;
+        private readonly IFileService _fileService;
 
         public AddInspectionModel(
             ICarAppService carService,
             IInspectionRequestAppService service,
-            IManufacturerAppService manufacturerService)
+            IManufacturerAppService manufacturerService,
+            IFileService fileService)
         {
             _carService = carService;
             _service = service;
             _manufacturerService = manufacturerService;
+            _fileService = fileService;
             Input = new InspectionRequestInputDto();
         }
 
@@ -35,12 +39,14 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Inspection
         public InspectionRequestInputDto Input { get; set; }
 
         [BindProperty]
+        public List<IFormFile> Images { get; set; } = new();
+
+        [BindProperty]
         public string ShamsiVisitAt { get; set; } // تاریخ شمسی از کاربر
 
         public List<ManufacturerDto> Factories { get; set; } = new();
         public List<CarDto> Cars { get; set; } = new();
 
-        // اولین بار که صفحه باز میشه یا وقتی کارخانه عوض میشه
         public void OnGet(int? factoryId = null)
         {
             Factories = _manufacturerService.GetManufacturer();
@@ -52,7 +58,6 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Inspection
             }
         }
 
-        // این متد خیلی مهمه! وقتی کارخانه عوض میشه این صدا میشه (با GET نه POST)
         public IActionResult OnGetLoadCars(int factoryId)
         {
             Factories = _manufacturerService.GetManufacturer();
@@ -61,7 +66,7 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Inspection
             if (factoryId > 0)
                 Cars = _carService.GetCarList(factoryId);
 
-            return Page(); // صفحه رو دوباره رندر می‌کنه ولی با GET
+            return Page();
         }
 
         public IActionResult OnPost()
@@ -84,16 +89,27 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Inspection
                 }
             }
 
-            // حالا ولیدیشن رو چک کن
             if (!ModelState.IsValid)
             {
-                // دوباره لیست کارخانه و ماشین رو پر کن
                 Factories = _manufacturerService.GetManufacturer();
                 if (Input.CarManufactureId > 0)
                     Cars = _carService.GetCarList(Input.CarManufactureId);
 
                 return Page();
             }
+
+            List<string> images = new List<string>();
+
+            if (Images != null || Images.Count > 0)
+            {
+                foreach (var file in Images)
+                {
+                    var image = _fileService.Upload(file, "CarImage");
+                    images.Add(image);
+                }
+            }
+
+            Input.Images.AddRange(images);
 
             var result = _service.AddInspectionRequest(Input);
 

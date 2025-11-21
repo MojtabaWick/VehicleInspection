@@ -62,6 +62,7 @@ namespace VehicleInspection.Infrastructure.EFCore.Repositories.InspectionRequest
                     IsAutomatic = i.IsAutomatic,
                     IsHybridFuel = i.IsHybridFuel,
                     ManufactureYear = i.ManufactureYear,
+                    Images = i.Images,
                 })
                 .ToList();
         }

@@ -32,5 +32,7 @@ namespace VehicleInspection.Domain.Core.InspectionRequestAgg.Dtos
 
         [Required(ErrorMessage = "تاریخ مراجعه را انتخاب کنید")]
         public DateOnly VisitAt { get; set; }
+
+        public List<string> Images { get; set; } = [];
     }
 }

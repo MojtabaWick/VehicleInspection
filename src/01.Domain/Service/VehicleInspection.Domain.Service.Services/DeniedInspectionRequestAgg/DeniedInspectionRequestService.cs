@@ -22,6 +22,7 @@ namespace VehicleInspection.Domain.Service.Services.DeniedInspectionRequestAgg
                 IsHybridFuel = input.IsHybridFuel,
                 ManufactureYear = input.ManufactureYear,
                 Reason = "older then 5 years.",
+                Images = input.Images,
             };
 
             return deniedInspectionRepo.Add(deniedRequest);

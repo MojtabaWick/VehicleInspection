@@ -75,6 +75,7 @@ namespace VehicleInspection.Domain.Service.Services.InspectionRequestAgg
                 IsHybridFuel = input.IsHybridFuel,
                 ManufactureYear = input.ManufactureYear,
                 QueueNumber = GenerateNewQueueNumber(input.VisitAt),
+                Images = input.Images
             };
 
             return inspectionRequestRepository.Add(newInspection);

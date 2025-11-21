@@ -12,6 +12,7 @@ using VehicleInspection.Domain.Service.Services.DeniedInspectionRequestAgg;
 using VehicleInspection.Domain.Service.Services.InspectionRequestAgg;
 using VehicleInspection.Domain.Service.Services.ManufacturerAgg;
 using VehicleInspection.Domain.Service.Services.OperatorAgg;
+using VehicleInspection.Framework.FileService;
 using VehicleInspection.Infrastructure.EFCore.Persistence;
 using VehicleInspection.Infrastructure.EFCore.Repositories.CarAgg;
 using VehicleInspection.Infrastructure.EFCore.Repositories.DeniedInspectionRequestAgg;
@@ -25,6 +26,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IFileService, FileService>();
+
 builder.Services.AddScoped<ICarAppService, CarAppService>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();

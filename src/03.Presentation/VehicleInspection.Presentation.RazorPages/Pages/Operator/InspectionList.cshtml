@@ -1,9 +1,12 @@
 ﻿@page
 @using VehicleInspection.Domain.Core.InspectionRequestAgg.Enums
+@using VehicleInspection.Framework
 @model VehicleInspection.Presentation.RazorPages.Pages.Operator.InspectionListModel
 @{
     Layout = "_Layout";
     ViewData["Title"] = "لیست درخواست‌های معاینه فنی";
+
+
 }
 <form method="get" class="row g-3 mb-4">
 
@@ -93,7 +96,7 @@
                                 </td>
 
                                 <td>@item.QueueNumber</td>
-                                <td>@item.VisitAt.ToString("yyyy/MM/dd")</td>
+                                <td>@item.VisitAt.ToPersianDate()</td>
 
                                 <td>
                                     @switch (item.Status)

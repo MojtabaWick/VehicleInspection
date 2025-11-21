@@ -19,5 +19,7 @@ namespace VehicleInspection.Domain.Core.InspectionRequestAgg.Entities
 
         public InspectionStatus Status { get; set; }
         public string Reason { get; set; }
+
+        public List<string> Images { get; set; } = [];
     }
 }
