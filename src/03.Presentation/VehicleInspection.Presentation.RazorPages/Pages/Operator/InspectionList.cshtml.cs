@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VehicleInspection.Domain.Core.InspectionRequestAgg.Contracts;
 using VehicleInspection.Domain.Core.InspectionRequestAgg.Dtos;
@@ -36,16 +36,13 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Operator
 
             Manufacturers = _manufacturerService.GetManufacturer();
 
-            // ????? ????? ???? ?? ?????? ??? ????? ?????? ????
-            DateOnly? gregorianDate = null;
-
             if (!string.IsNullOrWhiteSpace(Request.Query["selectedDate"]))
             {
                 string shamsi = Request.Query["selectedDate"].ToString();
-                gregorianDate = shamsi.ToGregorianDateOnly();  // ????? ?? ??????
+                SelectedDate = shamsi.ToGregorianDateOnly();
             }
 
-            Requests = _inspectionService.GetInspectionRequests(gregorianDate, ManufacturerId);
+            Requests = _inspectionService.GetInspectionRequests(SelectedDate, ManufacturerId);
 
             return Page();
         }
@@ -53,19 +50,31 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Operator
         public IActionResult OnGetSetApproved(int taskId)
         {
             _inspectionService.SetApproved(taskId);
-            return RedirectToPage(new { selectedDate = SelectedDate, manufacturerId = ManufacturerId });
+            return RedirectToPage(new
+            {
+                selectedDate = SelectedDate?.ToPersianDate(),
+                manufacturerId = ManufacturerId
+            });
         }
 
         public IActionResult OnGetSetPending(int taskId)
         {
             _inspectionService.SetPending(taskId);
-            return RedirectToPage(new { selectedDate = SelectedDate, manufacturerId = ManufacturerId });
+            return RedirectToPage(new
+            {
+                selectedDate = SelectedDate?.ToPersianDate(),
+                manufacturerId = ManufacturerId
+            });
         }
 
         public IActionResult OnGetSetRejected(int taskId)
         {
             _inspectionService.SetRejected(taskId);
-            return RedirectToPage(new { selectedDate = SelectedDate, manufacturerId = ManufacturerId });
+            return RedirectToPage(new
+            {
+                selectedDate = SelectedDate?.ToPersianDate(),
+                manufacturerId = ManufacturerId
+            });
         }
     }
 }
