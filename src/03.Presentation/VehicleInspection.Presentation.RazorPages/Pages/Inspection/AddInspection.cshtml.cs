@@ -66,10 +66,8 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Inspection
 
         public IActionResult OnPost()
         {
-            // اول از همه: پلاک رو بساز (این خط حتماً اول باشه!)
             Input.CarPlateNumber = Plate.ToPlateString();
 
-            // تبدیل تاریخ شمسی (حتی اگه خالی باشه خطا می‌دیم)
             if (string.IsNullOrWhiteSpace(ShamsiVisitAt))
             {
                 ModelState.AddModelError("ShamsiVisitAt", "تاریخ مراجعه الزامی است");
@@ -97,7 +95,6 @@ namespace VehicleInspection.Presentation.RazorPages.Pages.Inspection
                 return Page();
             }
 
-            // همه چیز اوکی → ذخیره کن
             var result = _service.AddInspectionRequest(Input);
 
             if (result.IsSuccess)

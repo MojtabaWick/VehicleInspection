@@ -1,0 +1,49 @@
+﻿@page
+@model VehicleInspection.Presentation.RazorPages.Pages.Operator.LogInModel
+@{
+    Layout = "_Layout";
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%; border-radius: 1rem;">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary">مدیریت کارها</h2>
+            <p class="text-muted">به حساب کاربری خود وارد شوید</p>
+        </div>
+
+        <form method="post">
+            <div class="mb-3 text-end">
+                <label for="Username" class="form-label">نام کاربری</label>
+                <input asp-for="Operator.Username"
+                       class="form-control text-end"
+                       placeholder="مثال: username"
+                       required />
+            </div>
+
+            <div class="mb-3 text-end">
+                <label for="Password" class="form-label">رمز عبور</label>
+                <input asp-for="Operator.Password"
+                       type="password"
+                       class="form-control text-end"
+                       placeholder="••••••••"
+                       required />
+            </div>
+
+            @if (Model.ResultMessage != null)
+            {
+                <div class="alert alert-danger text-center mb-3">
+                    @Model.ResultMessage
+                </div>
+            }
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
+                ورود
+            </button>
+        </form>
+
+        <div class="text-center mt-4">
+            <a href="#" class="text-decoration-none">رمز عبور خود را فراموش کرده‌اید؟</a>
+            <hr />
+        </div>
+    </div>
+</div>

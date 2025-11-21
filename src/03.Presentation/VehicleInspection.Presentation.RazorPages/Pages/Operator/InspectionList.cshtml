@@ -1,0 +1,149 @@
+﻿@page
+@using VehicleInspection.Domain.Core.InspectionRequestAgg.Enums
+@model VehicleInspection.Presentation.RazorPages.Pages.Operator.InspectionListModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "لیست درخواست‌های معاینه فنی";
+}
+<form method="get" class="row g-3 mb-4">
+
+    <div class="col-md-4">
+        <label class="form-label">انتخاب تاریخ</label>
+        <input type="date" class="form-control" name="selectedDate" value="@Request.Query["selectedDate"]" />
+    </div>
+
+    <div class="col-md-4">
+        <label class="form-label">انتخاب کارخانه</label>
+        <select class="form-select" name="manufacturerId">
+            <option value="">همه</option>
+            @foreach (var m in Model.Manufacturers)
+            {
+                <option value="@m.Id" 
+                        selected="@(Request.Query["manufacturerId"] == m.Id.ToString() ? "selected" : null)">
+                    @m.Name
+                </option>
+            }
+        </select>
+    </div>
+
+
+    <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-primary w-100">فیلتر</button>
+    </div>
+</form>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center fw-bold">لیست درخواست‌های معاینه فنی</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle text-center">
+                    <thead class="table-light">
+                        <tr>
+                            <th>شناسه</th>
+                            <th>نام خودرو</th>
+                            <th>نام مالک</th>
+                            <th>شماره تلفن</th>
+                            <th>شماره کارت ملی</th>
+                            <th>پلاک</th>
+                            <th>سال ساخت</th>
+                            <th>اتومات</th>
+                            <th>هیبرید</th>
+                            <th>نوبت</th>
+                            <th>تاریخ</th>
+                            <th>وضعیت</th>
+                            <th>آدرس</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Requests)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.CarName</td>
+                                <td>@item.CarOwnerName</td>
+                                <td>@item.CarOwnerPhoneNumber</td>
+                                <td>@item.CarOwnerIdCardNumber</td>
+                                <td>@item.CarPlateNumber</td>
+                                <td>@item.ManufactureYear</td>
+
+                                <td>
+                                    @if (item.IsAutomatic)
+                                    {
+                                        <span class="badge bg-success">بله</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">خیر</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.IsHybridFuel)
+                                    {
+                                        <span class="badge bg-success">بله</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">خیر</span>
+                                    }
+                                </td>
+
+                                <td>@item.QueueNumber</td>
+                                <td>@item.VisitAt.ToString("yyyy/MM/dd")</td>
+
+                                <td>
+                                    @switch (item.Status)
+                                    {
+                                        case InspectionStatus.Pending:
+                                            <span class="badge bg-primary">در حال انتظار</span>
+                                            break;
+
+                                        case InspectionStatus.Rejected:
+                                            <span class="badge bg-danger">رد شده</span>
+                                            break;
+
+                                        case InspectionStatus.Approved:
+                                            <span class="badge bg-success">تأیید شده</span>
+                                            break;
+                                    }
+                                </td>
+
+                                <td>@item.Address</td>
+                                
+                                <td>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        @if (item.Status == InspectionStatus.Approved)
+                                        {
+                                            <a asp-page-handler="SetPending" asp-route-taskId="@item.Id" class="btn btn-sm btn-outline-primary">
+                                                در انتظار
+                                            </a>
+
+                                        }
+                                        else
+                                        {
+                                            <a asp-page-handler="SetApproved" asp-route-taskId="@item.Id" class="btn btn-sm btn-outline-success">
+                                                تاییید کردن
+                                            </a>
+
+                                        }
+                                        <a asp-page-handler="SetRejected" asp-route-taskId="@item.Id" class="btn btn-sm btn-outline-danger">
+                                            رد کردن
+                                        </a>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
